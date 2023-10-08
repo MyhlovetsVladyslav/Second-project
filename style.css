@@ -1,0 +1,17 @@
+.header-title{
+    color: #487451;
+}
+:root {
+    --primary-color: #d7f6f8; 
+}
+.custom-body{
+    background-color: var(--primary-color);
+}
+.custom-line {
+    border-width: 6px;
+    border-color: yellow;
+}
+.custom-image {
+    width: 25px; 
+    height: auto; 
+}
