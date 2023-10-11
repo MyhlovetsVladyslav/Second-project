@@ -17,6 +17,51 @@ const descriptionConsumption = document.getElementById("description")
 const amount = document.getElementById("amount")
 const buttonTable = document.getElementById("buttonTable")
 
+const options = {
+    moduleCache: {
+      vue: Vue
+    },
+    async getFile(url) {
+      
+      const res = await fetch(url);
+      if ( !res.ok )
+        throw Object.assign(new Error(res.statusText + ' ' + url), { res });
+      return {
+        getContentData: asBinary => asBinary ? res.arrayBuffer() : res.text(),
+      }
+    },
+    addStyle(textContent) {
+
+      const style = Object.assign(document.createElement('style'), { textContent });
+      const ref = document.head.getElementsByTagName('style')[0] || null;
+      document.head.insertBefore(style, ref);
+    },
+  }
+
+  const { loadModule } = window['vue3-sfc-loader'];
+
+  const app = Vue.createApp({ // Завдання 2
+    components: {
+      'my-component': Vue.defineAsyncComponent( () => loadModule('./myComponent.vue', options) ),
+      'my-component2': Vue.defineAsyncComponent( () => loadModule('./myComponent2.vue', options) )
+    },
+    template: '<my-component><my-component2></my-component2></my-component>' 
+  });
+  const app2 = Vue.createApp({ //Завдання 9
+    components:{
+        'my-component3': Vue.defineAsyncComponent( () => loadModule('./myComponent3.vue', options) )
+    },
+    template: '<my-component3></my-component3>' 
+  })
+
+  app.mount('#app');
+  app2.mount('#app2');
+
+
+
+
+
+
 const balance = {
 }
 const categories = []
